@@ -7,11 +7,11 @@ on:
   workflow_dispatch: 
 
 jobs:
-  pester-test:
-    name: Pester test
+  run-powershell:
+    name: Using Azure Sql Server
     runs-on: ubuntu-latest
     steps:
-      - name: Start Db crreate from file.ps1
+      - uses: actions/checkout@v1
+      - name: create db from file.ps1
+        run: ./createdb.ps1
         shell: pwsh
-        run: |
-          createdb.ps1
