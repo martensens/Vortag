@@ -13,5 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: create db from file.ps1
-        run: ./createdb.ps1
+        run: |
+              Import-Module SQLPS
+              ./createdb.ps1
         shell: pwsh
