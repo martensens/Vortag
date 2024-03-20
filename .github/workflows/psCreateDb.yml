@@ -1,6 +1,6 @@
 # This workflow deploys a storage account to Azurecccc
 
-name: DeployToAzure
+name: Create database by powershell
 
 # Controls where the Workflow will run
 on:
