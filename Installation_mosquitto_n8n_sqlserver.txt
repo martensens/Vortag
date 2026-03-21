@@ -29,10 +29,14 @@ services:
       - N8N_BASIC_AUTH_ACTIVE=true
       - N8N_BASIC_AUTH_USER=admin
       - N8N_BASIC_AUTH_PASSWORD=admin123
+      - N8N_COMMUNITY_PACKAGES_ENABLED=true
+      - N8N_EDITOR_BASE_URL=https://benson-smorzando-novelly.ngrok-free.dev
+      - WEBHOOK_URL=https://benson-smorzando-novelly.ngrok-free.dev
+      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
     depends_on:
       - sqlserver
     volumes:
-      - n8n_data:/home/node/.n8n
+      - C:\ProgramData\n8n\n8n_data:/home/node/.n8n
     networks:
       - n8n_net
 
@@ -46,7 +50,7 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - sql_data:/var/opt/mssql
+      - C:\ProgramData\n8n\sql_data:/var/opt/mssql
     networks:
       - n8n_net
 
@@ -58,9 +62,9 @@ services:
       - "1883:1883"
       - "9001:9001"
     volumes:
-      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - mosquitto_data:/mosquitto/data
-      - mosquitto_log:/mosquitto/log
+      - C:\ProgramData\n8n\mosquitto\mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - C:\ProgramData\n8n\mosquitto\mosquitto_data:/mosquitto/data
+      - C:\ProgramData\n8n\mosquitto\mosquitto_log:/mosquitto/log
     networks:
       - n8n_net
 
@@ -71,15 +75,16 @@ web:
   ports:
     - "8080:80"
   volumes:
-    - ./web:/usr/share/nginx/html
+    - C:\ProgramData\n8n\web:/usr/share/nginx/html
   networks:
     - n8n_net
 
 volumes:
-  n8n_data:
-  sql_data:
-  mosquitto_data:
-  mosquitto_log:
+  C:\ProgramData\n8n\n8n_data:
+  C:\ProgramData\n8n\sql_data:
+  C:\ProgramData\n8n\mosquitto\mosquitto_data:
+  C:\ProgramData\n8n\mosquitto\mosquitto_log:
+  C:\ProgramData\n8n\web
 
 networks:
   n8n_net:
