@@ -64,6 +64,17 @@ services:
     networks:
       - n8n_net
 
+web:
+  image: nginx:alpine
+  container_name: web
+  restart: always
+  ports:
+    - "8080:80"
+  volumes:
+    - ./web:/usr/share/nginx/html
+  networks:
+    - n8n_net
+
 volumes:
   n8n_data:
   sql_data:
