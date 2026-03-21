@@ -1,0 +1,72 @@
+//Ordner für Website erstellen
+mkdir web
+nano web/index.html
+
+//Website bauen
+<!DOCTYPE html>
+<html>
+<head>
+  <title>💸 Kunden-Check</title>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>💸 Kundenprüfung</h1>
+
+<input id="kunde" placeholder="Kundennummer">
+<input id="betrag" placeholder="Betrag">
+<br>
+<button onclick="send()">Prüfen</button>
+
+<div id="result">Warte auf Eingabe...</div>
+
+<script>
+const client = mqtt.connect("ws://192.168.0.5:9001");
+
+client.on("connect", () => {
+  console.log("MQTT verbunden");
+  client.subscribe("customer/result");
+});
+
+client.on("message", (topic, message) => {
+  const result = message.toString();
+
+  if (result === "OK") {
+    document.getElementById("result").innerHTML = "✅ Zahlung erlaubt";
+    document.getElementById("result").style.color = "lime";
+  } else {
+    document.getElementById("result").innerHTML = "❌ Nicht genug Guthaben";
+    document.getElementById("result").style.color = "red";
+  }
+});
+
+function send() {
+  const kunde = document.getElementById("kunde").value;
+  const betrag = document.getElementById("betrag").value;
+
+  const payload = kunde + "," + betrag;
+
+  client.publish("customer/check", payload);
+}
+</script>
+
+</body>
+</html>
