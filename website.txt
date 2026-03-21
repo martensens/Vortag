@@ -40,11 +40,11 @@ nano web/index.html
 <div id="result">Warte auf Eingabe...</div>
 
 <script>
-const client = mqtt.connect("ws://192.168.0.5:9001");
 
+const client = mqtt.connect("ws://192.168.0.5:9001");
 client.on("connect", () => {
   console.log("MQTT verbunden");
-  client.subscribe("customer/result");
+  client.subscribe("customer/result"); 
 });
 
 client.on("message", (topic, message) => {
@@ -60,12 +60,18 @@ client.on("message", (topic, message) => {
 });
 
 function send() {
-  const kunde = document.getElementById("kunde").value;
+  const kundenNr = document.getElementById("kunde").value;
   const betrag = document.getElementById("betrag").value;
+  if (!kundenNr || !betrag) {
+    alert("Bitte beide Felder ausfüllen!");
+    return;
+  }
+  console.log("Sende:", kundenNr, betrag);
 
-  const payload = kunde + "," + betrag;
+  document.getElementById("result").innerHTML = "⏳ Prüfe...";
+  document.getElementById("result").style.color = "white";
 
-  client.publish("customer/check", payload);
+  client.publish("customer/check", kundenNr + "," + betrag);
 }
 </script>
 
