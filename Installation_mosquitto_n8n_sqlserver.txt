@@ -74,10 +74,10 @@ networks:
   n8n_net:
     driver: bridge
 
-https://benson-smorzando-novelly.ngrok-free.dev/workflow/Q2H1zwhAea2a8xXD
-
 //Speichern und schließen
 >-und speichern/schließen
 
 //Starten des docker-compose.yml
 docker compose up -d
+
+https://benson-smorzando-novelly.ngrok-free.dev/workflow/Q2H1zwhAea2a8xXD
